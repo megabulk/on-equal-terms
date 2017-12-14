@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+
+  {% include head.html %}
+
+ {% assign image_files = site.static_files | where: "image", true %}
+ <body class="project" style="background-image:url({{ image_files[0].path }})">
+
+    {% include header_project.html %}
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        {{ content }}
+
+{% assign image_files = site.static_files | where: "image", true %}
+{% for myimage in image_files %}
+  {{ myimage.path }}
+{% endfor %}
+      </div>
+    </main>
+
+    {% include footer_project.html %}
+  </body>
+
+</html>
