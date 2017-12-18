@@ -4,7 +4,7 @@
   {% include head.html %}
 
  {% assign image_files = site.static_files | where: "image", true %}
- <body class="project" style="background-image:url({{ image_files[0].path }})">
+ <body class="project" style="background-image:url({{ image_files[0].path | relative_url }})">
 
     {% include header_project.html %}
 
