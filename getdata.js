@@ -42,19 +42,6 @@ async.series([function setAuth(step) {
 		// Clean posts.yml
 		fs.truncate("./_data/posts.yml", 0, () => {});
 		projects = rows;
-		for (let row of rows) {
-		// Save rows as items in the YAML file
-			fs.appendFile(
-				"./_data/posts.yml",
-				"- title: " +
-				row.title +
-				"\n\x20\x20" +
-				"data: " +
-				row.data +
-				"\n\n",
-				err => {}
-			);
-		}
 		step();
 	});
 }, function loadClientSecrets(step) {
@@ -230,9 +217,35 @@ function listFiles(auth) {
 								//application/vnd.google-apps.folder
 								//Bathroom Shack (1ysl_sw5iMdgyLPmoMKHR53PYDh1vIgC1)
 								console.log('Files: ' + project.title);
+
+								fs.appendFile(
+									"./_data/posts.yml",
+									"- title: " +
+									project.title +
+									"\n\x20\x20" +
+									"data: " +
+									project.data +
+									"\n\x20\x20" +
+									"images: "
+									,
+									err => {}
+								);
+
 								for (var i = 0; i < files.length; i++) {
 									var file = files[i];
 									console.log(file);
+									fs.appendFile(
+										"./_data/posts.yml",
+										"\n\x20\x20\x20\x20" +
+										"- id: " +
+										file.id +
+										"\n\x20\x20\x20\x20\x20\x20" +
+										"description: " +
+										file.description +
+										"\n",
+										err => {}
+									);
+
 								}
 							}
 						});
