@@ -217,26 +217,27 @@ function listFiles(auth) {
 								//application/vnd.google-apps.folder
 								//Bathroom Shack (1ysl_sw5iMdgyLPmoMKHR53PYDh1vIgC1)
 								console.log('Files: ' + project.title);
-
-								fs.appendFile(
-									"./_data/posts.yml",
-									"- title: " +
-									project.title +
-									"\n\x20\x20" +
-									"data: " +
-									project.data +
-									"\n\x20\x20" +
-									"images: "
-									,
-									err => {}
-								);
+								if (files.length) {
+									fs.appendFile(
+										"./_data/posts.yml",
+										"- title: " +
+										project.title +
+										"\n\x20\x20" +
+										"data: " +
+										project.data +
+										"\n\x20\x20" +
+										"images: " +
+										"\n",
+										err => {}
+									);
+								}
 
 								for (var i = 0; i < files.length; i++) {
 									var file = files[i];
 									console.log(file);
 									fs.appendFile(
 										"./_data/posts.yml",
-										"\n\x20\x20\x20\x20" +
+										"\x20\x20\x20\x20" +
 										"- id: " +
 										file.id +
 										"\n\x20\x20\x20\x20\x20\x20" +
