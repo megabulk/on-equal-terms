@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "getdata.js",
-  "dependencies": {},
+  "dependencies": {
+    "google-auth-library": "^0.12.0",
+    "googleapis": "^23.0.0"
+  },
   "devDependencies": {
     "async": "^2.6.0",
     "babel-cli": "^6.26.0",

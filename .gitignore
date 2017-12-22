@@ -3,3 +3,4 @@ _site
 .jekyll-metadata
 on equal terms-*.json
 node_modules
+client_secret*
