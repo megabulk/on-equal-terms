@@ -1,10 +1,3 @@
-- title: Bathroom Shack
-  data: bathroom data
-  images: 
-    - id: 1IqBR89uGq6F-WxcC8Vq7whJA8m13CNbs
-      description: Here's a description, Jimmy Hat
-    - id: 1EsbauOYYsXU5AQlQ0s2-GALhQdTslnsx
-      description: Description #2
 - title: Project #2
   data: more data
   images: 
@@ -14,3 +7,10 @@
       description: undefined
     - id: 1FG7-4HXdZlxsAeCPfjzWz0DiGG7LDxrQ
       description: undefined
+- title: Bathroom Shack
+  data: bathroom data
+  images: 
+    - id: 1IqBR89uGq6F-WxcC8Vq7whJA8m13CNbs
+      description: Here's a description, Jimmy Hat
+    - id: 1EsbauOYYsXU5AQlQ0s2-GALhQdTslnsx
+      description: Description #2

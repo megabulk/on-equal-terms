@@ -17,6 +17,8 @@ let sheet;
 
 let projects = [];
 
+let datafile = '../_data/posts.yml';
+
 
 async.series([function setAuth(step) {
 	const creds = require("./on equal terms-fb6d7d521f80.json");
@@ -41,7 +43,7 @@ async.series([function setAuth(step) {
 	}, function(err, rows) {
 		console.log("Read " + rows.length + " rows");
 		// Clean posts.yml
-		fs.truncate("./_data/posts.yml", 0, () => {});
+		fs.truncate(datafile, 0, () => {});
 		projects = rows;
 		step();
 	});
@@ -220,7 +222,7 @@ function listFiles(auth) {
 								console.log('Files: ' + project.title);
 								if (files.length) {
 									fs.appendFile(
-										"./_data/posts.yml",
+										datafile,
 										"- title: " +
 										project.title +
 										"\n\x20\x20" +
@@ -237,7 +239,7 @@ function listFiles(auth) {
 									var file = files[i];
 									console.log(file);
 									fs.appendFile(
-										"./_data/posts.yml",
+										datafile,
 										"\x20\x20\x20\x20" +
 										"- id: " +
 										file.id +
