@@ -1,4 +1,5 @@
 //https://sprintworks.se/blog/data-from-google-drive-in-static-websites/
+//run with 'npm run getdata'
 import GoogleSpreadsheet from "google-spreadsheet";
 import async from "async";
 import fs from "fs";
