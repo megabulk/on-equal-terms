@@ -4,7 +4,7 @@
   {% include head.html %}
 
  {% assign image_files = site.static_files | where: "image", true %}
- <body class="project" style="background-image:url({{ image_files[0].path }})">
+ <body class="project" style="background-image:url({{ image_files[0].path | relative_url }})">
 
     {% include header_project.html %}
 
@@ -12,10 +12,12 @@
       <div class="wrapper">
         {{ content }}
 
-{% assign image_files = site.static_files | where: "image", true %}
 {% for myimage in image_files %}
   {{ myimage.path }}
 {% endfor %}
+<!-- why does this NOT work in Safari unless using Private Browsing mode (for me)? -->
+<img src="https://drive.google.com/uc?export=view&id=1IqBR89uGq6F-WxcC8Vq7whJA8m13CNbs" alt="">
+<!--https://stackoverflow.com/a/34994471-->
       </div>
     </main>
 
