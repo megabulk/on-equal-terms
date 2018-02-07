@@ -1,17 +1,18 @@
 {
-  "name": "getdata_server",
+  "name": "on_equal_terms",
   "version": "1.0.0",
   "description": "",
-  "main": "getdata.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "getdata": "babel-node getdata.js"
+    "getdata": "babel-node _getdata_server/getdata.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.4",
     "express": "^4.16.2",
+    "git-push": "^0.1.1",
     "google-auth-library": "^0.12.0",
     "googleapis": "^23.0.0"
   },

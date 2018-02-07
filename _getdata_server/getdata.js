@@ -1,5 +1,6 @@
 //https://sprintworks.se/blog/data-from-google-drive-in-static-websites/
 //run with 'npm run getdata'
+console.log('getdata called');
 import GoogleSpreadsheet from "google-spreadsheet";
 import async from "async";
 import fs from "fs";
@@ -17,7 +18,7 @@ let sheet;
 
 let projects = [];
 
-let datafile = '../_data/posts.yml';
+let datafile = '_data/posts.yml';
 
 
 async.series([function setAuth(step) {
@@ -50,7 +51,7 @@ async.series([function setAuth(step) {
 }, function loadClientSecrets(step) {
 	console.log('loadClientSecrets');
 	// Load client secrets from a local file.
-	fs.readFile('client_secret.json', function processClientSecrets(err, content) {
+	fs.readFile('_getdata_server/client_secret.json', function processClientSecrets(err, content) {
 		if (err) {
 			console.log('Error loading client secret file: ' + err);
 			return;
