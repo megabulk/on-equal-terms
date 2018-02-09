@@ -18,8 +18,30 @@ let sheet;
 
 let projects = [];
 
-let datafile = '_data/posts.yml';
+let projects_dir = '_projects';
 
+let emptyDir = function(dirPath) {
+	try {
+		var files = fs.readdirSync(dirPath);
+	} catch(e) {
+		return;
+	}
+	console.log(files);
+	if (files.length > 0) {
+		for (var i = 0; i < files.length; i++) {
+			var filePath = dirPath + '/' + files[i];
+			if (fs.statSync(filePath).isFile()) {
+				fs.unlinkSync(filePath);
+			} else {
+				emptyDir(filePath);
+			}
+		}
+	}
+};
+
+function make_permalink(str) {
+    return str.replace(/[^a-z0-9]+/gi, '-').replace(/^-*|-*$/g, '').toLowerCase();
+}
 
 async.series([function setAuth(step) {
 	const creds = require("./on equal terms-fb6d7d521f80.json");
@@ -43,8 +65,6 @@ async.series([function setAuth(step) {
 		orderby: "col1"
 	}, function(err, rows) {
 		console.log("Read " + rows.length + " rows");
-		// Clean posts.yml
-		fs.truncate(datafile, 0, () => {});
 		projects = rows;
 		step();
 	});
@@ -168,6 +188,11 @@ function listFiles(auth) {
 	if (files.length == 0) {
 		console.log('No files found.');
 	} else {
+		//clean out projects directory
+		emptyDir(projects_dir);
+		
+		
+		
 		//https://developers.google.com/drive/v3/web/search-parameters
 		//OET Images (1Iu6jWgIxjThhM7GtANdacYcSVXRANCbL)
 		//image/jpeg
@@ -194,6 +219,7 @@ function listFiles(auth) {
 				if (files.length == 0) {
 					console.log('No files found in ' + project.title);
 				} else {
+					var projectfile = projects_dir + '/' + make_permalink(project.title) + '.markdown', bkg_image;
 					console.log('Project Folder: ' + project.title);
 					for (var i = 0; i < files.length; i++) {
 						var file = files[i];
@@ -222,37 +248,43 @@ function listFiles(auth) {
 								//Bathroom Shack (1ysl_sw5iMdgyLPmoMKHR53PYDh1vIgC1)
 								console.log('Files: ' + project.title);
 								if (files.length) {
-									fs.appendFile(
-										datafile,
-										"- title: " +
-										project.title +
-										"\n\x20\x20" +
-										"data: " +
-										project.data +
-										"\n\x20\x20" +
-										"images: " +
-										"\n",
-										err => {}
-									);
+									var imgs = '';
+									for (var i = 0; i < files.length; i++) {
+										var file = files[i];
+										console.log(file);
+										if (file.name == 'bkg.jpg') {
+											bkg_image = file.id;
+										} else {
+											imgs +=
+`
+  - id: ${file.id}
+    name: ${file.name}`;
+    										if (file.description) {
+    											imgs += `
+    description: "${file.description}"`;
+    										}
+										}
+
+									}
 								}
 
-								for (var i = 0; i < files.length; i++) {
-									var file = files[i];
-									console.log(file);
-									fs.appendFile(
-										datafile,
-										"\x20\x20\x20\x20" +
-										"- id: " +
-										file.id +
-										"\n\x20\x20\x20\x20\x20\x20" +
-										"description: " +
-										file.description +
-										"\n",
-										err => {}
-									);
-
-								}
 							}
+
+					//write the file
+					var template = `---
+layout: project
+title:  "${project.title}"
+data:   "${project.data}"
+background: ${bkg_image}
+images: ${imgs}
+---
+`;
+					fs.appendFile(
+						projectfile,
+						template,
+						err => {}
+					);
+
 						});
 					}
 				}
@@ -266,3 +298,4 @@ function listFiles(auth) {
 
 	
 }
+

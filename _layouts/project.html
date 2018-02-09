@@ -12,6 +12,16 @@
       <div class="wrapper">
         {{ content }}
 
+<ul>
+    {% for post in site.data.posts %}
+    <li>
+        <h2>
+          <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+        </h2>
+    </li>
+    {% endfor %}
+</ul>
+
 {% for myimage in image_files %}
   {{ myimage.path }}
 {% endfor %}
