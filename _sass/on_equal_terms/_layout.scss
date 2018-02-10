@@ -2,8 +2,6 @@
  * Site header
  */
 .site-header {
-	border-top: 5px solid $grey-color-dark;
-	border-bottom: 1px solid $grey-color-light;
 	min-height: $spacing-unit * 1.865;
 
 	// Positioning context for the mobile navigation icon
@@ -106,7 +104,6 @@
  * Site footer
  */
 .site-footer {
-	border-top: 1px solid $grey-color-light;
 	padding: $spacing-unit 0;
 }
 
@@ -258,6 +255,53 @@ body.project {
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
+	background-attachment: fixed;
 	height: 100%;
 	width: 100%;
+	color: #7fa29c;
+	h1, h2, h3 {
+		font-family: 'Roboto Slab', serif;
+	}
+	h1 {
+		text-transform: uppercase;
+		font-weight: 700;
+	}
+	h3 {
+		font-weight: 400;
+	}
+	.view_slides {
+		text-decoration: underline;
+		cursor: pointer;
+		&:hover {
+			color: #FFF;
+		}
+	}
+	.slideshow {
+		/*display: none;*/
+		position: relative;
+		background-color: #999;
+		height: 100px;
+		.slidenav {
+			.navL, .navR {
+				position: absolute;
+				width: 120px;
+				cursor: pointer;
+				height: 100px;
+				z-index: 99;
+			}
+			.navL {
+				left: 0;
+			}
+			.navR {
+				right: 0;
+			}
+		}
+		.slide {
+			background-color: #999;
+			padding: 10px;
+			/*position: absolute;*/
+			/*display: none;*/
+		}
+	}
 }
+

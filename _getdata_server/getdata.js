@@ -43,6 +43,16 @@ function make_permalink(str) {
     return str.replace(/[^a-z0-9]+/gi, '-').replace(/^-*|-*$/g, '').toLowerCase();
 }
 
+function escapeHtml(unsafe) {
+    return unsafe
+         .replace(/&/g, "&amp;")
+         .replace(/</g, "&lt;")
+         .replace(/>/g, "&gt;")
+         .replace(/"/g, "&quot;")
+         .replace(/`/g, "&#96;")
+         .replace(/'/g, "&#039;");
+ }
+
 async.series([function setAuth(step) {
 	const creds = require("./on equal terms-fb6d7d521f80.json");
 	doc.useServiceAccountAuth(creds, step);
@@ -228,7 +238,7 @@ function listFiles(auth) {
 						//get images
 			
 						service.files.list({
-							q: "mimeType='image/jpeg' and '" + file.id + "' in parents",
+							q: "mimeType='image/jpeg' and '" + file.id + "' in parents and trashed = false",
 							auth: auth,
 							pageSize: 100,
 							fields: "nextPageToken, files(id, name, mimeType, parents, properties, description)"
@@ -255,13 +265,15 @@ function listFiles(auth) {
 										if (file.name == 'bkg.jpg') {
 											bkg_image = file.id;
 										} else {
+											//var description = escapeHtml(file.description);
 											imgs +=
 `
   - id: ${file.id}
     name: ${file.name}`;
     										if (file.description) {
+    											var description = escapeHtml(file.description);
     											imgs += `
-    description: "${file.description}"`;
+    description: "${description}"`;
     										}
 										}
 
@@ -272,7 +284,7 @@ function listFiles(auth) {
 
 					//write the file
 					var template = `---
-layout: project
+layout: slideshow
 title:  "${project.title}"
 data:   "${project.data}"
 background: ${bkg_image}

@@ -1,37 +1,42 @@
 <!DOCTYPE html>
 <html lang="{{ page.lang | default: site.lang | default: "en" }}">
 
-  {% include head.html %}
+	{% include head.html %}
 
- {% assign image_files = site.static_files | where: "image", true %}
- <body class="project" style="background-image:url({{ image_files[0].path | relative_url }})">
+	{% assign image_files = site.static_files | where: "image", true %}
+	{% if page.background == "undefined" %}
+		<body class="project">
+	{% else %}
+		<body class="project" style="background-image:url(https://drive.google.com/uc?export=view&id={{ page.background }})">
+	{% endif %}
 
-    {% include header_project.html %}
+	{% include header_project.html %}
 
-    <main class="page-content" aria-label="Content">
-      <div class="wrapper">
-        {{ content }}
+		<main class="page-content" aria-label="Content">
+		<div class="wrapper">
+			{{ content }}
+			<div class="slideshow">
+				<div class="slidenav">
+					<div class="navL"></div>
+					<div class="navR"></div>
+				</div><!--.slidenav-->
+				{% for myimage in page.images %}
+					<!-- why does this NOT work in Safari unless using Private Browsing mode (for me)? -->
+					<!--https://stackoverflow.com/a/34994471-->
+					<div class="slide">
+						<img src="https://drive.google.com/uc?export=view&id={{ myimage.id }}" alt="">
+						{% if myimage.description %}
+						<h3>{{ myimage.description }}</h3>
+						{% endif %}
+					</div><!--.slide-->
+				{% endfor %}
+			</div><!--.slideshow-->
+		</div><!--.wrapper-->
+		</main>
 
-<ul>
-    {% for post in site.data.posts %}
-    <li>
-        <h2>
-          <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
-        </h2>
-    </li>
-    {% endfor %}
-</ul>
-
-{% for myimage in image_files %}
-  {{ myimage.path }}
-{% endfor %}
-<!-- why does this NOT work in Safari unless using Private Browsing mode (for me)? -->
-<img src="https://drive.google.com/uc?export=view&id=1IqBR89uGq6F-WxcC8Vq7whJA8m13CNbs" alt="">
-<!--https://stackoverflow.com/a/34994471-->
-      </div>
-    </main>
-
-    {% include footer_project.html %}
-  </body>
+		{% include footer_project.html %}
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="{{ "/" | relative_url }}assets/javascript/oet.js"></script>
+	</body>
 
 </html>

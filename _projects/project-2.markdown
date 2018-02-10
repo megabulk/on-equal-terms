@@ -1,7 +1,7 @@
 ---
-layout: project
+layout: slideshow
 title:  "Project #2"
-data:   "more data"
+data:   ""
 background: undefined
 images: 
   - id: 1XJrDetSOq4Gz1VPgnsWF06nvnGwCEWZl
